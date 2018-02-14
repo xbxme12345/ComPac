@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.huangy4.compac.New_List_Page">
+
+
+    <ImageButton
+        android:id="@+id/main_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:layout_alignParentLeft="true"
+        android:background="@null"
+        android:padding="10sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New List"
+        android:layout_centerHorizontal="true"
+        android:padding="7sp"
+        android:textSize="20sp"/>
+
+    <ImageButton
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_mode_edit_black_24dp"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:padding="10sp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp">
+        <EditText
+            android:id="@+id/destination_input"
+            android:layout_width="272dp"
+            android:layout_height="47dp"
+            android:ems="10"
+            android:hint="Destination"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="54dp" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="272dp"
+            android:layout_height="47dp"
+            android:ems="10"
+            android:hint="Start Date"
+            android:inputType="date"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="219dp" />
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="272dp"
+            android:layout_height="47dp"
+            android:ems="10"
+            android:inputType="date"
+            android:hint="End Date"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="293dp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

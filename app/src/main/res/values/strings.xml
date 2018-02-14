@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ComPac</string>
+
+
+    <string name="new_list">New List</string>
+
+    <string name="existing_list">Existing List</string>
+    <string name="edit">Edit</string>
+    <string name="destination_label">Destination</string>
 </resources>
