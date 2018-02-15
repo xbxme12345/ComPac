@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="325dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    android:background="@color/color"
+    tools:context="com.example.huangy4.compac.Add_Item_Fragment">
+
+    <LinearLayout
+        android:id="@+id/item_name_pair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/exit_add_item_fragment"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/item_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_name" />
+
+        <EditText
+            android:id="@+id/item_name_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Description" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/item_quantity_pair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/item_name_pair"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/item_quantity_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_quantity"/>
+
+        <EditText
+            android:id="@+id/item_quantity_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/confirm_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_done_black_24dp"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        android:id="@+id/add_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:text="@string/add_item" />
+
+    <ImageButton
+        android:id="@+id/exit_add_item_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:layout_alignParentTop="true"/>
+
+</RelativeLayout>
