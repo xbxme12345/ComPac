@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.huangy4.compac.New_List_Page">
+
+
+    <ImageButton
+        android:id="@+id/new_list_page_back_button"
+        android:contentDescription="Return back to main page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:layout_alignParentLeft="true"
+        android:background="@null"
+        android:padding="10sp"/>
+
+    <TextView
+        android:id="@+id/new_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NEW LIST PAGE"
+        android:layout_centerHorizontal="true"
+        android:padding="7sp"
+        android:textSize="20sp"/>
+
+    <ImageButton
+        android:id="@+id/edit_button"
+        android:contentDescription="@string/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_mode_edit_black_24dp"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:padding="10sp"/>
+
+</RelativeLayout>
