@@ -17,9 +17,7 @@ public class Main_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
-        Button newList = (Button)findViewById(R.id.new_list_button);
-        Button existingList = (Button)findViewById(R.id.existing_list_button);
-
+        Button newList = findViewById(R.id.new_list_button);
         newList.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -30,6 +28,7 @@ public class Main_Page extends AppCompatActivity {
             }
         });
 
+        Button existingList = findViewById(R.id.existing_list_button);
         existingList.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

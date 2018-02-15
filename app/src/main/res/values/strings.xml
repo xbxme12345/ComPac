@@ -2,9 +2,11 @@
     <string name="app_name">ComPac</string>
 
 
-    <string name="new_list">New List</string>
-
     <string name="existing_list">Existing List</string>
     <string name="edit">Edit</string>
     <string name="destination_label">Destination</string>
+    <string name="new_list">New List</string>
+    <string name="add_item">Add Item</string>
+    <string name="item_name">Name</string>
+    <string name="item_quantity">Quantity</string>
 </resources>
