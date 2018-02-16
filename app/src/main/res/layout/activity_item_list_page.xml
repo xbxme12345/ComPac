@@ -7,7 +7,7 @@
     tools:context="com.example.huangy4.compac.Existing_List_Page">
 
     <ImageButton
-        android:id="@+id/item_list_page_back_button"
+        android:id="@+id/exit_item_list_page"
         android:contentDescription=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,13 +17,33 @@
         android:padding="10sp"/>
 
     <TextView
-        android:id="@+id/list_title"
+        android:id="@+id/description_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ITEM LIST PAGE"
+        android:text=""
         android:layout_centerHorizontal="true"
         android:padding="7sp"
         android:textSize="20sp"/>
+
+    <LinearLayout
+        android:id="@+id/date_range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/exit_item_list_page">
+
+        <TextView
+            android:id="@+id/start_date_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/end_date_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/edit_button"
