@@ -94,7 +94,8 @@ public class New_List_Page extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         android.support.v4.app.Fragment pick_date_frag = new Pick_Date_Fragment();
-        transaction.replace(R.id.new_list_page, pick_date_frag);
+        transaction.add(R.id.new_list_page, pick_date_frag);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 

@@ -32,7 +32,7 @@ public class Add_Item_Fragment extends Fragment {
 //                FragmentManager fm = getActivity().getSupportFragmentManager();
 //                FragmentTransaction transaction = fm.beginTransaction();
 //                Fragment fragment2 = new MyFragment2();
-//                transaction.replace(R.id.container, fragment2);
+//                transaction.remove(R.id.container, fragment2);
 //                transaction.commit();
             }
         });
