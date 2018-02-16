@@ -62,7 +62,8 @@ public class Item_List_Page extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 Fragment add_item_frag = new Add_Item_Fragment();
-                transaction.replace(R.id.item_list_page, add_item_frag);
+                transaction.add(R.id.item_list_page, add_item_frag);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
