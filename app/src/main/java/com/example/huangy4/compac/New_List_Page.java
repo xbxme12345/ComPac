@@ -1,11 +1,20 @@
 package com.example.huangy4.compac;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Switch;
+import android.widget.TextView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class New_List_Page extends AppCompatActivity {
     private static final String TAG = "ComPac";
@@ -17,7 +26,7 @@ public class New_List_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_list_page);
 
-        ImageButton back_button = findViewById(R.id.new_list_page_back_button);
+        ImageButton back_button = findViewById(R.id.exit_new_list_page);
         back_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -31,5 +40,62 @@ public class New_List_Page extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+        ImageButton add_new_list_button = findViewById(R.id.add_new_list_button);
+        add_new_list_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.v(TAG, "main_button clicked");
+
+                //destination
+                TextView destination_textV = findViewById(R.id.destination_input);
+                String destination = destination_textV.getText().toString();
+
+                //gender
+
+                //start_date_input
+                TextView start_date_textV = findViewById(R.id.start_date_input);
+                String start_date = start_date_textV.getText().toString();
+
+                //end_date_input
+                TextView end_date_textV = findViewById(R.id.end_date_input);
+                String end_date = end_date_textV.getText().toString();
+
+                //reminder
+                Switch reminder_textV = findViewById(R.id.reminder_switch);
+                Boolean reminder = false;
+
+
+                Log.v(TAG, "destination = " + destination +
+//                                "; gender = " + gender +
+                                "; start_date = " + start_date +
+                                "; end_date = " + end_date +
+                                "; reminder = " + reminder);
+
+                Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
+                Bundle bundle = new Bundle();
+
+                bundle.putString("destination", destination);
+//                bundle.putString("gender", gender);
+                bundle.putString("start_date", start_date);
+                bundle.putString("end_date", end_date);
+                bundle.putBoolean("reminder", reminder);
+
+
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
+    public void datePicker(View v) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        android.support.v4.app.Fragment pick_date_frag = new Pick_Date_Fragment();
+        transaction.replace(R.id.new_list_page, pick_date_frag);
+        transaction.commit();
+    }
+
 }

@@ -7,6 +7,10 @@
     <string name="destination_label">Destination</string>
     <string name="new_list">New List</string>
     <string name="add_item">Add Item</string>
-    <string name="item_name">Name</string>
+    <string name="item_name_label">Name</string>
     <string name="item_quantity">Quantity</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="gender_label">Gender</string>
+    <string name="reminder">Reminder</string>
 </resources>
