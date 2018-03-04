@@ -13,4 +13,17 @@
     <string name="end_date">End Date</string>
     <string name="gender_label">Gender</string>
     <string name="reminder">Reminder</string>
+
+
+    <string name="security_prompt">Select a question...</string>
+
+    <string-array name="security_arrays">
+        <item>What street did you grow up on?</item>
+        <item>What was the name of your first pet?</item>
+        <item>What is your fathers middle name?</item>
+        <item>What is your high school mascot?</item>
+        <item>What is the name of your best friend?</item>
+        <item>What is your favorite color?</item>
+    </string-array>
+
 </resources>

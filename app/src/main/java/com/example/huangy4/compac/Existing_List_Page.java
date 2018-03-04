@@ -5,15 +5,41 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Existing_List_Page extends AppCompatActivity {
     private static final String TAG = "ComPac";
 
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
+    private ListView listview;
+    private ArrayList<String> entries;
+
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, "Entering Existing_List_Page");
+
+        mAuth.addAuthStateListener(authStateListener);
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_existing_list_page);
@@ -39,14 +65,37 @@ public class Existing_List_Page extends AppCompatActivity {
             }
         });
 
-        Button item_list = findViewById(R.id.fake_item_list_button);
-        item_list.setOnClickListener(new View.OnClickListener(){
+        listview = findViewById(R.id.newListView);
+        String UID = mAuth.getUid();
+        myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList");
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v){
-                Log.v(TAG, "fake_item_list_button clicked");
-                Intent intent = new Intent(Existing_List_Page.this, Item_List_Page.class);
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                entries = new ArrayList<>();
+                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                while(iterator.hasNext())
+                {
+                    try
+                    {
+                        String value = iterator.next().getKey().toString();
+                        entries.add(value);
+                    }
+                    catch (DatabaseException e)
+                    {
+                        Log.v(TAG, "preferences=" + e);
 
-                startActivity(intent);
+                    }
+                }
+                ArrayAdapter<String> arrayAdapter;
+                arrayAdapter = new ArrayAdapter<String>(Existing_List_Page.this, android.R.layout.simple_list_item_1, entries);
+                listview.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

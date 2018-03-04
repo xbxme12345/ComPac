@@ -1,5 +1,7 @@
 package com.example.huangy4.compac;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,11 +10,41 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseException;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Item_List_Page extends AppCompatActivity {
     private static final String TAG = "ComPac";
+    private String end_date;
+    private String start_date;
+    private String destination;
+
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
+    private ListView listview;
+    private ListView listview2;
+
+    private ArrayList<String> items;
+    private ArrayList<String> quantities;
+
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,18 +53,64 @@ public class Item_List_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list_page);
 
-
         Bundle bundle = this.getIntent().getExtras();
-        String description = bundle.getString("description");
-        String start_date = bundle.getString("start_date");
-        String end_date = bundle.getString("end_date");
+        String tableName = bundle.getString("tableName");
 
-        Log.v(TAG, "description = " + description +
-                        "; start_date = " + start_date +
-                        "; end_date = " + end_date);
+        String UID = mAuth.getCurrentUser().getUid();
+
+        listview = findViewById(R.id.newListView);
+        listview2 = findViewById(R.id.newListView2);
+        myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                items = new ArrayList<>();
+                quantities = new ArrayList<>();
+                Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+                while(iterator.hasNext())
+                {
+                    try
+                    {
+                        DataSnapshot s = iterator.next();
+                        String namevalue = s.getKey().toString();
+                        String quantityvalue = s.getValue().toString();
+                        items.add(namevalue);
+                        quantities.add(quantityvalue);
+                    }
+                    catch (DatabaseException e)
+                    {
+                        Log.v(TAG, "preferences=" + e);
+
+                    }
+                }
+
+                ArrayAdapter<String> arrayAdapter;
+                arrayAdapter = new ArrayAdapter<String>(Item_List_Page.this, android.R.layout.simple_list_item_1, items);
+                listview.setAdapter(arrayAdapter);
+
+                ArrayAdapter<String> arrayAdapter2;
+                arrayAdapter2 = new ArrayAdapter<String>(Item_List_Page.this, android.R.layout.simple_list_item_1, quantities);
+                listview2.setAdapter(arrayAdapter2);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+
+
 
         TextView description_textV = findViewById(R.id.description_value);
-        description_textV.setText(description);
+        description_textV.setText(destination);
 
         TextView start_date_textV = findViewById(R.id.start_date_value);
         start_date_textV.setText(start_date);
