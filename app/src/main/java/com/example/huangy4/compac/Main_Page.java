@@ -1,6 +1,7 @@
 package com.example.huangy4.compac;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,9 @@ public class Main_Page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, "Entering Main_Page");
 
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
 
@@ -23,6 +27,9 @@ public class Main_Page extends AppCompatActivity {
             public void onClick(View v){
                 Log.v(TAG, "New List Button clicked");
                 Intent intent = new Intent(Main_Page.this, New_List_Page.class);
+
+
+
 
                 startActivity(intent);
             }

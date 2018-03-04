@@ -1,7 +1,9 @@
 package com.example.huangy4.compac;
 
 import android.app.Fragment;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,12 +14,24 @@ import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class New_List_Page extends AppCompatActivity {
     private static final String TAG = "ComPac";
+    private String gender;
+
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +39,9 @@ public class New_List_Page extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_list_page);
+        gender = "Male";
+
+        mAuth.addAuthStateListener(authStateListener);
 
         ImageButton back_button = findViewById(R.id.exit_new_list_page);
         back_button.setOnClickListener(new View.OnClickListener(){
@@ -55,6 +72,7 @@ public class New_List_Page extends AppCompatActivity {
 
                 //gender
 
+
                 //start_date_input
                 TextView start_date_textV = findViewById(R.id.start_date_input);
                 String start_date = start_date_textV.getText().toString();
@@ -68,23 +86,20 @@ public class New_List_Page extends AppCompatActivity {
                 Boolean reminder = false;
 
 
-                Log.v(TAG, "destination = " + destination +
-//                                "; gender = " + gender +
-                                "; start_date = " + start_date +
-                                "; end_date = " + end_date +
-                                "; reminder = " + reminder);
+
+                String TableName = (destination+" "+start_date+" " +end_date);
+
+                String UID = mAuth.getCurrentUser().getUid().toString();
+                myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
+                myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
+                myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
+                myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
+                myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
+                myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
 
                 Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
                 Bundle bundle = new Bundle();
-
-                bundle.putString("destination", destination);
-//                bundle.putString("gender", gender);
-                bundle.putString("start_date", start_date);
-                bundle.putString("end_date", end_date);
-                bundle.putBoolean("reminder", reminder);
-
-
-
+                bundle.putString("tableName", TableName);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -99,4 +114,11 @@ public class New_List_Page extends AppCompatActivity {
         transaction.commit();
     }
 
+    public void setGenderMale(View view) {
+        gender = "Male";
+    }
+
+    public void setGenderFemale(View view) {
+        gender = "Female";
+    }
 }

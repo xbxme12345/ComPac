@@ -74,13 +74,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_male_black_24dp"
+            android:onClick="setGenderMale"
             />
 
         <ImageButton
             android:id="@+id/female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_female_black_24dp"/>
+            android:src="@drawable/ic_female_black_24dp"
+            android:onClick="setGenderFemale"/>
     </LinearLayout>
 
     <LinearLayout
