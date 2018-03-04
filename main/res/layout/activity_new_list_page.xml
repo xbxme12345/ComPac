@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/new_list_page"
+    tools:context="com.example.huangy4.compac.New_List_Page">
+
+
+    <ImageButton
+        android:id="@+id/exit_new_list_page"
+        android:contentDescription="Return back to main page"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_clear_black_24dp"
+        android:background="@null"
+        android:padding="10sp"/>
+
+    <TextView
+        android:id="@+id/new_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NEW LIST PAGE"
+        android:layout_centerHorizontal="true"
+        android:padding="7sp"
+        android:textSize="20sp"/>
+
+    <ImageButton
+        android:id="@+id/add_new_list_button"
+        android:contentDescription=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_done_black_24dp"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:padding="10sp" />
+
+    <LinearLayout
+        android:id="@+id/destination_pair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exit_new_list_page"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/destination_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/destination_label"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/destination_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gender_pair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/destination_pair"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/gender_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gender_label"
+            android:layout_gravity="center"
+            android:textSize="20sp"/>
+
+        <ImageButton
+            android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_male_black_24dp"
+            android:onClick="setGenderMale"
+            />
+
+        <ImageButton
+            android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_female_black_24dp"
+            android:onClick="setGenderFemale"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/start_date_pair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gender_pair"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/start_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_date"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/start_date_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:ems="10"
+            android:onClick="datePicker"
+            android:inputType="date" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/end_date_pair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/start_date_pair"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/end_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/end_date"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/end_date_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/new_list_title"
+            android:layout_marginStart="22dp"
+            android:ems="10"
+            android:onClick="datePicker"
+            android:inputType="date" />
+    </LinearLayout>
+
+    <Switch
+        android:id="@+id/reminder_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/end_date_pair"
+        android:text="@string/reminder"
+        android:padding="10dp"
+        android:textSize="20sp"/>
+
+</RelativeLayout>
