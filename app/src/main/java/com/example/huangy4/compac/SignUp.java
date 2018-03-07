@@ -35,9 +35,7 @@ public class SignUp extends AppCompatActivity {
     private EditText mVerify_input;
     private Spinner mSecurity_input;
     private EditText mAnswer_input;
-    private Spinner mStyle_input;
-    private Spinner mGender_input;
-    private Spinner mPref_gender_input;
+
 
 
     private Button mSubmit_button;

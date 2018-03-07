@@ -40,8 +40,9 @@ public class New_List_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_list_page);
         gender = "Male";
+        mAuth = FirebaseAuth.getInstance();
 
-        mAuth.addAuthStateListener(authStateListener);
+        //mAuth.addAuthStateListener(authStateListener);
 
         ImageButton back_button = findViewById(R.id.exit_new_list_page);
         back_button.setOnClickListener(new View.OnClickListener(){
@@ -87,7 +88,7 @@ public class New_List_Page extends AppCompatActivity {
 
 
 
-                String TableName = (destination+" "+start_date+" " +end_date);
+                String TableName = (destination+""+start_date+" " +end_date);
 
                 String UID = mAuth.getCurrentUser().getUid().toString();
                 myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
