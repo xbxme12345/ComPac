@@ -56,6 +56,8 @@ public class Item_List_Page extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         String tableName = bundle.getString("tableName");
 
+        mAuth = FirebaseAuth.getInstance();
+
         String UID = mAuth.getCurrentUser().getUid();
 
         listview = findViewById(R.id.newListView);

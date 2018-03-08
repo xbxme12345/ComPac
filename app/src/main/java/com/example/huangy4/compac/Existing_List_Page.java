@@ -38,7 +38,9 @@ public class Existing_List_Page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(TAG, "Entering Existing_List_Page");
 
-        mAuth.addAuthStateListener(authStateListener);
+        mAuth = FirebaseAuth.getInstance();
+
+        // mAuth.addAuthStateListener(authStateListener);
 
 
         super.onCreate(savedInstanceState);
