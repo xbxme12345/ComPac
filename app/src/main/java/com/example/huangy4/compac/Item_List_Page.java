@@ -65,14 +65,14 @@ public class Item_List_Page extends AppCompatActivity {
         String UID = mAuth.getCurrentUser().getUid();
 
         listview = findViewById(R.id.newListView);
-        listview2 = findViewById(R.id.newListView2);
+        //listview2 = findViewById(R.id.newListView2);
         myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
                 items = new ArrayList<>();
-                quantities = new ArrayList<>();
+                // quantities = new ArrayList<>();
                 Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                 Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
                 while(iterator.hasNext())
@@ -82,8 +82,8 @@ public class Item_List_Page extends AppCompatActivity {
                         DataSnapshot s = iterator.next();
                         String namevalue = s.getKey().toString();
                         String quantityvalue = s.getValue().toString();
-                        items.add(namevalue);
-                        quantities.add(quantityvalue);
+                        items.add(namevalue + " " + quantityvalue);
+                        //quantities.add(quantityvalue);
                     }
                     catch (DatabaseException e)
                     {
@@ -95,10 +95,6 @@ public class Item_List_Page extends AppCompatActivity {
                 ArrayAdapter<String> arrayAdapter;
                 arrayAdapter = new ArrayAdapter<String>(Item_List_Page.this, android.R.layout.simple_list_item_1, items);
                 listview.setAdapter(arrayAdapter);
-
-                ArrayAdapter<String> arrayAdapter2;
-                arrayAdapter2 = new ArrayAdapter<String>(Item_List_Page.this, android.R.layout.simple_list_item_1, quantities);
-                listview2.setAdapter(arrayAdapter2);
             }
 
             @Override
