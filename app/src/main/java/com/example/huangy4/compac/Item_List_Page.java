@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +42,9 @@ public class Item_List_Page extends AppCompatActivity {
     private ArrayList<String> items;
     private ArrayList<String> quantities;
 
+    private EditText quantity;
+    private EditText nameofItem;
+
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -54,7 +58,7 @@ public class Item_List_Page extends AppCompatActivity {
         setContentView(R.layout.activity_item_list_page);
 
         Bundle bundle = this.getIntent().getExtras();
-        String tableName = bundle.getString("tableName");
+        final String tableName = bundle.getString("tableName");
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -142,6 +146,9 @@ public class Item_List_Page extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 Fragment add_item_frag = new Add_Item_Fragment();
+                Add_Item_Fragment.setTablename(tableName);
+                Add_Item_Fragment.setnameofItem(nameofItem.getText().toString());
+                Add_Item_Fragment.setquantity(quantity.getText().toString());
                 transaction.add(R.id.item_list_page, add_item_frag);
                 transaction.addToBackStack(null);
                 transaction.commit();
