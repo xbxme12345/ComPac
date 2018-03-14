@@ -12,7 +12,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
 public class Add_Item_Fragment extends Fragment {
+
+    private ArrayList<String> items;
+    private ArrayList<String> quantities;
+    static String quantity;
+    static String nameofItem;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    static String tablename;
+    private FirebaseAuth mAuth;
     private static final String TAG = "ComPac";
 
     @Override
@@ -38,6 +53,20 @@ public class Add_Item_Fragment extends Fragment {
         });
 
         return rootView;
+    }
+    public static void setTablename(String myEmp)
+    {
+        tablename = myEmp;
+    }
+
+    public static void setnameofItem(String myEmp)
+    {
+        nameofItem = myEmp;
+    }
+
+    public static void setquantity(String myEmp)
+    {
+        quantity = myEmp;
     }
 
 

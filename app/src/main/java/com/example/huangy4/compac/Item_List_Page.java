@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +42,9 @@ public class Item_List_Page extends AppCompatActivity {
     private ArrayList<String> items;
     private ArrayList<String> quantities;
 
+    private EditText quantity;
+    private EditText nameofItem;
+
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -54,21 +58,21 @@ public class Item_List_Page extends AppCompatActivity {
         setContentView(R.layout.activity_item_list_page);
 
         Bundle bundle = this.getIntent().getExtras();
-        String tableName = bundle.getString("tableName");
+        final String tableName = bundle.getString("tableName");
 
         mAuth = FirebaseAuth.getInstance();
 
         String UID = mAuth.getCurrentUser().getUid();
 
         listview = findViewById(R.id.newListView);
-        listview2 = findViewById(R.id.newListView2);
+        //listview2 = findViewById(R.id.newListView2);
         myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
                 items = new ArrayList<>();
-                quantities = new ArrayList<>();
+                // quantities = new ArrayList<>();
                 Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                 Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
                 while(iterator.hasNext())
@@ -78,8 +82,8 @@ public class Item_List_Page extends AppCompatActivity {
                         DataSnapshot s = iterator.next();
                         String namevalue = s.getKey().toString();
                         String quantityvalue = s.getValue().toString();
-                        items.add(namevalue);
-                        quantities.add(quantityvalue);
+                        items.add(namevalue + " " + quantityvalue);
+                        //quantities.add(quantityvalue);
                     }
                     catch (DatabaseException e)
                     {
@@ -91,10 +95,6 @@ public class Item_List_Page extends AppCompatActivity {
                 ArrayAdapter<String> arrayAdapter;
                 arrayAdapter = new ArrayAdapter<String>(Item_List_Page.this, android.R.layout.simple_list_item_1, items);
                 listview.setAdapter(arrayAdapter);
-
-                ArrayAdapter<String> arrayAdapter2;
-                arrayAdapter2 = new ArrayAdapter<String>(Item_List_Page.this, android.R.layout.simple_list_item_1, quantities);
-                listview2.setAdapter(arrayAdapter2);
             }
 
             @Override
@@ -142,6 +142,9 @@ public class Item_List_Page extends AppCompatActivity {
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 Fragment add_item_frag = new Add_Item_Fragment();
+                Add_Item_Fragment.setTablename(tableName);
+                Add_Item_Fragment.setnameofItem(nameofItem.getText().toString());
+                Add_Item_Fragment.setquantity(quantity.getText().toString());
                 transaction.add(R.id.item_list_page, add_item_frag);
                 transaction.addToBackStack(null);
                 transaction.commit();
