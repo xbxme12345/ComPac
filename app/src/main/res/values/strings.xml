@@ -13,6 +13,8 @@
     <string name="end_date">End Date</string>
     <string name="gender_label">Gender</string>
     <string name="reminder">Reminder</string>
+    <string name="reminder_date">Reminder Date</string>
+    <string name="reminder_time">Reminder Time</string>
 
 
     <string name="security_prompt">Select a question...</string>

@@ -1,40 +1,43 @@
 package com.example.huangy4.compac;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.net.sip.SipSession;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
-public class Pick_Date_Fragment extends Fragment {
+import java.util.Calendar;
+
+public class Pick_Date_Fragment extends DialogFragment {
     private static final String TAG = "ComPac";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        Log.v(TAG, "Entering Date_Pick_Fragment clicked");
 
-        //Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_pick_date, container, false);
+        Log.v(TAG, "Entering Pick_Date_Fragment");
 
-        ImageButton myBtn = rootView.findViewById(R.id.exit_pick_date_fragment);
-        myBtn.setOnClickListener(new View.OnClickListener() {
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
 
-            @Override
-            public void onClick(View v) {
-
-//                FragmentManager fm = getActivity().getSupportFragmentManager();
-//                FragmentTransaction transaction = fm.beginTransaction();
-//                Fragment fragment2 = new MyFragment2();
-//                transaction.replace(R.id.container, fragment2);
-//                transaction.commit();
-            }
-        });
-
-        return rootView;
+        return new DatePickerDialog(getActivity(), dateSetListener, year, month, day);
     }
 
+    private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+            Log.v(TAG, "Entering onDateSet");
+
+            TextView tv = getActivity().findViewById(getActivity().getCurrentFocus().getId());
+            tv.setText(view.getMonth() + "-" + view.getDayOfMonth() + "-" + view.getYear());
+        }
+    };
 
 }
