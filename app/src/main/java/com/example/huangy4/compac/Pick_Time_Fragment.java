@@ -1,42 +1,40 @@
 package com.example.huangy4.compac;
 
-import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.net.sip.SipSession;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-public class Pick_Date_Fragment extends DialogFragment {
+public class Pick_Time_Fragment extends DialogFragment {
     private static final String TAG = "ComPac";
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-
         Log.v(TAG, "Entering Pick_Date_Fragment");
 
         final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
 
-        return new DatePickerDialog(getActivity(), dateSetListener, year, month, day);
+        return new TimePickerDialog(getActivity(), timeSetListener, hour, minute, DateFormat.is24HourFormat(getActivity()));
     }
 
-    private DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+    private TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        public void onTimeSet(TimePicker view, int hour, int minute) {
 
             Log.v(TAG, "Entering onDateSet");
 
             TextView tv = getActivity().findViewById(getActivity().getCurrentFocus().getId());
-            tv.setText(view.getMonth() + "-" + view.getDayOfMonth() + "-" + view.getYear());
+            tv.setText(Integer.toString(hour) + ":" + Integer.toString(minute));
         }
     };
 
