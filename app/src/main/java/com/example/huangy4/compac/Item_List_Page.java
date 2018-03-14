@@ -143,8 +143,6 @@ public class Item_List_Page extends AppCompatActivity {
                 FragmentTransaction transaction = fm.beginTransaction();
                 Fragment add_item_frag = new Add_Item_Fragment();
                 Add_Item_Fragment.setTablename(tableName);
-                Add_Item_Fragment.setnameofItem(nameofItem.getText().toString());
-                Add_Item_Fragment.setquantity(quantity.getText().toString());
                 transaction.add(R.id.item_list_page, add_item_frag);
                 transaction.addToBackStack(null);
                 transaction.commit();
