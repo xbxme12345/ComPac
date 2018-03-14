@@ -35,27 +35,6 @@ public class New_List_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_list_page);
 
-
-        //Start Date
-        TextView start_date_btn = findViewById(R.id.start_date_text);
-        final FragmentManager fm = getSupportFragmentManager();
-
-        start_date_btn.setOnClickListener( new View.OnClickListener() {
-            public void onClick(View arg0) {
-                Pick_Date_Fragment dateFrag = new Pick_Date_Fragment();
-                dateFrag.show(fm, "date picker");
-            }
-        });
-
-        //End Date
-        TextView end_date_btn = findViewById(R.id.end_date_text);
-        end_date_btn.setOnClickListener( new View.OnClickListener() {
-            public void onClick(View arg0) {
-                Pick_Date_Fragment dateFrag = new Pick_Date_Fragment();
-                dateFrag.show(fm, "date picker");
-            }
-        });
-
         //Reminder Switch
         Switch s1 = findViewById(R.id.reminder_switch);
         s1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -71,25 +50,6 @@ public class New_List_Page extends AppCompatActivity {
                 }
             }
         });
-
-        //Reminder Date
-        TextView reminder_date_btn = findViewById(R.id.reminder_date_text);
-        reminder_date_btn.setOnClickListener( new View.OnClickListener() {
-            public void onClick(View arg0) {
-                Pick_Date_Fragment dateFrag = new Pick_Date_Fragment();
-                dateFrag.show(fm, "date picker");
-            }
-        });
-
-        //Reminder Time
-        TextView reminder_time_btn = findViewById(R.id.reminder_time_text);
-        reminder_time_btn.setOnClickListener( new View.OnClickListener() {
-            public void onClick(View arg0) {
-                Pick_Time_Fragment dateFrag = new Pick_Time_Fragment();
-                dateFrag.show(fm, "time picker");
-            }
-        });
-
 
         //Gender
         ImageButton male_btn = findViewById(R.id.male);
@@ -117,6 +77,7 @@ public class New_List_Page extends AppCompatActivity {
                 }
             }
         });
+
 
         gender = "Male";
         mAuth = FirebaseAuth.getInstance();
