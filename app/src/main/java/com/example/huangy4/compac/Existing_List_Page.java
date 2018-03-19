@@ -119,4 +119,9 @@ public class Existing_List_Page extends AppCompatActivity {
             }
         });
     }
+    public void gotonew()
+    {
+        Intent intent = new Intent(Existing_List_Page.this, New_List_Page.class);
+        startActivity(intent);
+    }
 }

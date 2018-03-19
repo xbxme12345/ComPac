@@ -43,7 +43,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@null"
-        android:padding="10sp"/>
+        android:padding="10sp"
+        android:onClick="gotonew"/>
 
     <ListView
     android:id="@+id/newListView"
