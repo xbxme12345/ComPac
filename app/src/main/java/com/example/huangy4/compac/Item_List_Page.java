@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -67,7 +68,8 @@ public class Item_List_Page extends AppCompatActivity {
         listview = findViewById(R.id.newListView);
         //listview2 = findViewById(R.id.newListView2);
         myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List");
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener()
+        {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
@@ -95,7 +97,40 @@ public class Item_List_Page extends AppCompatActivity {
                 ArrayAdapter<String> arrayAdapter;
                 arrayAdapter = new ArrayAdapter<String>(Item_List_Page.this, android.R.layout.simple_list_item_1, items);
                 listview.setAdapter(arrayAdapter);
-            }
+                //deleting
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                    {
+                        String UID = mAuth.getCurrentUser().getUid().toString();
+                        String stuff = (listview.getItemAtPosition(position)).toString();
+                        String [] container = stuff.split(" ");
+                        myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List").child(container[0]);
+                        myRef.removeValue();
+
+                        ///////////////////////////////// editing
+                        /*
+                        String stuff = (listview.getItemAtPosition(position)).toString();
+                        String [] container = stuff.split(" ");
+                        FragmentManager fm = getSupportFragmentManager();
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        Fragment add_item_frag = new Add_Item_Fragment();
+                        Add_Item_Fragment.setTablename(tableName);
+                        Add_Item_Fragment.setNameofItem2(container[0]);
+                        Add_Item_Fragment.setQuantity1(container[1]);
+                        transaction.add(R.id.item_list_page, add_item_frag);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        */
+
+
+
+                    }
+                });
+
+                }
+
+
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {

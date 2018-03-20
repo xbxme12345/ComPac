@@ -40,7 +40,14 @@ public class Add_Item_Fragment extends Fragment {
 
         Log.v(TAG, "Entering Add_Item_Fragment clicked");
         mAuth = FirebaseAuth.getInstance();
+        mquantity = (EditText) v.findViewById(R.id.item_quantity_input);
+        mnameofItem = (EditText) v.findViewById(R.id.item_name_input);
 
+        if(!(nameofItem2.equalsIgnoreCase("")) && !(quantity1.equalsIgnoreCase("")))
+        {
+            mquantity.setText(quantity1);
+            mnameofItem.setText(nameofItem2);
+        }
 
          UID = mAuth.getCurrentUser().getUid();
 
@@ -53,8 +60,8 @@ public class Add_Item_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                mquantity = (EditText) v.findViewById(R.id.item_quantity_input);
-                mnameofItem = (EditText) v.findViewById(R.id.item_name_input);
+
+
                 nameofItem2 = mnameofItem.getText().toString();
                 quantity1 = mquantity.getText().toString();
 
@@ -70,6 +77,12 @@ public class Add_Item_Fragment extends Fragment {
     }
     public static void setTablename(String tableName){
         tablename = tableName;
+    }
+    public static void setQuantity1(String tableName){
+        quantity1 = tableName;
+    }
+    public static void setNameofItem2(String tableName){
+        nameofItem2 = tableName;
     }
 
 
