@@ -30,15 +30,21 @@ import java.util.Iterator;
 
 public class Item_List_Page extends AppCompatActivity {
     private static final String TAG = "ComPac";
-    private String end_date;
-    private String start_date;
-    private String destination;
+    //private String end_date;
+    //private String start_date;
+    //private String destination;
 
     FirebaseDatabase database;
     DatabaseReference myRef;
+    DatabaseReference destination;
+    DatabaseReference startDate;
+    DatabaseReference endDate;
 
     private ListView listview;
-    private ListView listview2;
+    private TextView titleView;
+
+    private TextView start_end_date_view;
+    private String startDateVal = "";
 
     private ArrayList<String> items;
     private ArrayList<String> quantities;
@@ -66,7 +72,9 @@ public class Item_List_Page extends AppCompatActivity {
         String UID = mAuth.getCurrentUser().getUid();
 
         listview = findViewById(R.id.newListView);
-        //listview2 = findViewById(R.id.newListView2);
+        titleView = findViewById(R.id.description_value);
+        start_end_date_view = findViewById(R.id.start_end_date_value);
+
         myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List");
         myRef.addValueEventListener(new ValueEventListener()
         {
@@ -97,7 +105,8 @@ public class Item_List_Page extends AppCompatActivity {
                 ArrayAdapter<String> arrayAdapter;
                 arrayAdapter = new ArrayAdapter<String>(Item_List_Page.this, android.R.layout.simple_list_item_1, items);
                 listview.setAdapter(arrayAdapter);
-                //deleting
+
+                //display items
                 listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                     {
@@ -107,8 +116,7 @@ public class Item_List_Page extends AppCompatActivity {
                         myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List").child(container[0]);
                         myRef.removeValue();
 
-                        ///////////////////////////////// editing
-                        /*
+                        /* I dont think we need this to display items
                         String stuff = (listview.getItemAtPosition(position)).toString();
                         String [] container = stuff.split(" ");
                         FragmentManager fm = getSupportFragmentManager();
@@ -121,15 +129,10 @@ public class Item_List_Page extends AppCompatActivity {
                         transaction.addToBackStack(null);
                         transaction.commit();
                         */
-
-
-
                     }
                 });
 
                 }
-
-
 
 
             @Override
@@ -138,23 +141,38 @@ public class Item_List_Page extends AppCompatActivity {
             }
         });
 
+        //displays the name of the trip on top of the page
+        destination = FirebaseDatabase.getInstance().getReference("Users").child(UID)
+                .child("PackingList").child(tableName).child("Destination");
+        destination.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                titleView.setText(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
+        //gets start and end date for the trip
+        startDate = FirebaseDatabase.getInstance().getReference("Users").child(UID)
+                .child("PackingList").child(tableName).child("StartDate");
+        endDate = FirebaseDatabase.getInstance().getReference("Users").child(UID)
+                .child("PackingList").child(tableName).child("EndDate");
+        endDate.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                startDateVal = dataSnapshot.getValue().toString();
+                start_end_date_view.setText(startDateVal + " to " + dataSnapshot.getValue().toString());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-
-
-
-
-
-        TextView description_textV = findViewById(R.id.description_value);
-        description_textV.setText(destination);
-
-        TextView start_date_textV = findViewById(R.id.start_date_value);
-        start_date_textV.setText(start_date);
-
-        TextView end_date_textV = findViewById(R.id.end_date_value);
-        end_date_textV.setText(end_date);
-
+            }
+        });
 
 
         ImageButton back_button = findViewById(R.id.exit_item_list_page);
