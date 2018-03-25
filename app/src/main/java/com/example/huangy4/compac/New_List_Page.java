@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
@@ -19,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class New_List_Page extends AppCompatActivity {
     private static final String TAG = "ComPac";
-    private String gender;
+    private String gender = "None";
 
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -51,13 +52,15 @@ public class New_List_Page extends AppCompatActivity {
             }
         });
 
-        //Gender
-        ImageButton male_btn = findViewById(R.id.male);
+        //Get gender. gender is set to "None" by default
+        //ImageButton male_btn = findViewById(R.id.male);
+        Button male_btn = findViewById(R.id.male);
         male_btn.setOnClickListener( new ImageButton.OnClickListener() {
             public void onClick(View button) {
                 button.setSelected(!button.isSelected());
                 if (button.isSelected()) {
                     button.setSelected(true);
+                    gender = "Male";
                 }
                 else {
                     button.setSelected(false);
@@ -65,12 +68,14 @@ public class New_List_Page extends AppCompatActivity {
             }
         });
 
-        ImageButton female_btn = findViewById(R.id.female);
+        //ImageButton female_btn = findViewById(R.id.female);
+        Button female_btn = findViewById(R.id.female);
         female_btn.setOnClickListener( new ImageButton.OnClickListener() {
             public void onClick(View button) {
                 button.setSelected(!button.isSelected());
                 if (button.isSelected()) {
                     button.setSelected(true);
+                    gender = "Female";
                 }
                 else {
                     button.setSelected(false);
@@ -79,7 +84,7 @@ public class New_List_Page extends AppCompatActivity {
         });
 
 
-        gender = "Male";
+
         mAuth = FirebaseAuth.getInstance();
 
         //mAuth.addAuthStateListener(authStateListener);
@@ -111,9 +116,6 @@ public class New_List_Page extends AppCompatActivity {
                 TextView destination_textV = findViewById(R.id.destination_input);
                 String destination = destination_textV.getText().toString();
 
-                //gender
-
-
                 //start_date_input
                 TextView start_date_textV = findViewById(R.id.start_date_text);
                 String start_date = start_date_textV.getText().toString();
@@ -126,8 +128,6 @@ public class New_List_Page extends AppCompatActivity {
                 Switch reminder_textV = findViewById(R.id.reminder_switch);
                 Boolean reminder = false;
 
-
-
                 String TableName = (destination+""+start_date+" " +end_date);
 
                 String UID = mAuth.getCurrentUser().getUid().toString();
@@ -137,6 +137,7 @@ public class New_List_Page extends AppCompatActivity {
                 myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
                 myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
                 myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
+                itemGenerator(myRef, TableName, gender);
 
                 Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
                 Bundle bundle = new Bundle();
@@ -145,6 +146,46 @@ public class New_List_Page extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void itemGenerator(DatabaseReference myRef, String TableName, String gender) {
+        Log.v(TAG, "Generating items");
+        if (gender.equals("Male")) {
+            myRef.child("PackingList").child(TableName).child("List").child("T-Shirt").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("Underwear").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Pants").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Shorts").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Jackets").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("Dress Shirts").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("shoes").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("socks").setValue(1);
+
+        }
+        else if (gender.equals("Female")) {
+            //myRef.child("PackingList").child(TableName).child("List").child("T-Shirt").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("Underwear").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Pants").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Shorts").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Jackets").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Dresses").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("shoes").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("socks").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Bra").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Makeup").setValue(1);
+
+        }
+        else {
+            //myRef.child("PackingList").child(TableName).child("List").child("T-Shirt").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("Underwear").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("Pants").setValue(1);
+            //myRef.child("PackingList").child(TableName).child("List").child("Shorts").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Jackets").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Dress Shirts").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("shoes").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("socks").setValue(1);
+
+        }
+
     }
 
     public void datePicker(View v) {

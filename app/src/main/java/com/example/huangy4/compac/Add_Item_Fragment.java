@@ -40,8 +40,8 @@ public class Add_Item_Fragment extends Fragment {
 
         Log.v(TAG, "Entering Add_Item_Fragment clicked");
         mAuth = FirebaseAuth.getInstance();
-        mquantity = (EditText) v.findViewById(R.id.item_quantity_input);
-        mnameofItem = (EditText) v.findViewById(R.id.item_name_input);
+        mquantity = (EditText) container.findViewById(R.id.item_quantity_input);
+        mnameofItem = (EditText) container.findViewById(R.id.item_name_input);
 
         if(!(nameofItem2.equalsIgnoreCase("")) && !(quantity1.equalsIgnoreCase("")))
         {
