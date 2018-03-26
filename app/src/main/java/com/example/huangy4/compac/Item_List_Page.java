@@ -113,7 +113,8 @@ public class Item_List_Page extends AppCompatActivity {
                         String UID = mAuth.getCurrentUser().getUid().toString();
                         String stuff = (listview.getItemAtPosition(position)).toString();
                         String [] container = stuff.split(" ");
-                        myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List").child(container[0]);
+                        myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList")
+                                .child(tableName).child("List").child(container[0]);
                         myRef.removeValue();
 
                         /* I dont think we need this to display items
@@ -157,15 +158,27 @@ public class Item_List_Page extends AppCompatActivity {
         });
 
 
-        //gets start and end date for the trip
+        //gets start date and saves the value
         startDate = FirebaseDatabase.getInstance().getReference("Users").child(UID)
                 .child("PackingList").child(tableName).child("StartDate");
+        startDate.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                startDateVal = dataSnapshot.getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //gets the end date and then sets the text of the TextView
         endDate = FirebaseDatabase.getInstance().getReference("Users").child(UID)
                 .child("PackingList").child(tableName).child("EndDate");
         endDate.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                startDateVal = dataSnapshot.getValue().toString();
                 start_end_date_view.setText(startDateVal + " to " + dataSnapshot.getValue().toString());
             }
             @Override
