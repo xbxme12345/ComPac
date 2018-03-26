@@ -37,14 +37,14 @@ public class Item_List_Page extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference myRef;
     DatabaseReference destination;
-    DatabaseReference startDate;
-    DatabaseReference endDate;
+    DatabaseReference getDate;
 
     private ListView listview;
     private TextView titleView;
 
     private TextView start_end_date_view;
-    private String startDateVal = "";
+    private String startDateVal;
+    private String endDateVal;
 
     private ArrayList<String> items;
     private ArrayList<String> quantities;
@@ -158,29 +158,18 @@ public class Item_List_Page extends AppCompatActivity {
         });
 
 
-        //gets start date and saves the value
-        startDate = FirebaseDatabase.getInstance().getReference("Users").child(UID)
-                .child("PackingList").child(tableName).child("StartDate");
-        startDate.addValueEventListener(new ValueEventListener() {
+        //gets start and end date and sets the value
+        getDate = FirebaseDatabase.getInstance().getReference("Users").child(UID)
+                .child("PackingList").child(tableName);
+        getDate.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                startDateVal = dataSnapshot.getValue().toString();
+                startDateVal = dataSnapshot.child("StartDate").getValue().toString();
+                endDateVal = dataSnapshot.child("EndDate").getValue().toString();
+
+                start_end_date_view.setText(startDateVal + " to " + endDateVal);
             }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        //gets the end date and then sets the text of the TextView
-        endDate = FirebaseDatabase.getInstance().getReference("Users").child(UID)
-                .child("PackingList").child(tableName).child("EndDate");
-        endDate.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                start_end_date_view.setText(startDateVal + " to " + dataSnapshot.getValue().toString());
-            }
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
