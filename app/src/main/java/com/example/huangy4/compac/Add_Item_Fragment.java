@@ -36,10 +36,13 @@ public class Add_Item_Fragment extends Fragment {
     private String UID;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+        nameofItem2 = "";
+        quantity1 = "";
 
         Log.v(TAG, "Entering Add_Item_Fragment clicked");
         mAuth = FirebaseAuth.getInstance();
+        mquantity = (EditText) container.findViewById(R.id.item_quantity_input);mnameofItem = (EditText) container.findViewById(R.id.item_name_input);
 
 
          UID = mAuth.getCurrentUser().getUid();
@@ -47,20 +50,31 @@ public class Add_Item_Fragment extends Fragment {
         //Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_add_item, container, false);
 
+        //nameofItem = findViewById(R.id.item_name_input);
+        //mquantity = findViewById(R.id.item_quantity_input);
+
+
+        if((nameofItem2.equalsIgnoreCase("")!= true) && (quantity1.equalsIgnoreCase("")!= true))
+        {
+            mquantity.setText(quantity1);
+            mnameofItem.setText(nameofItem2);
+        }
+
+
         final ImageButton myBtn = rootView.findViewById(R.id.confirm_add_button);
         myBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                mquantity = (EditText) v.findViewById(R.id.item_quantity_input);
-                mnameofItem = (EditText) v.findViewById(R.id.item_name_input);
+
+
                 nameofItem2 = mnameofItem.getText().toString();
                 quantity1 = mquantity.getText().toString();
 
                 myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tablename).child("List");
                 myRef.child(nameofItem2).setValue(quantity1);
-
+                closefragment();
 
 //
             }
@@ -68,8 +82,22 @@ public class Add_Item_Fragment extends Fragment {
 
         return rootView;
     }
+
+    public void closfragment()
+    {
+        //closefragment();
+    }
     public static void setTablename(String tableName){
         tablename = tableName;
+    }
+    public static void setQuantity1(String x){
+        quantity1 = x;
+    }
+    public static void setNameofItem2(String y){
+        nameofItem2 = y;
+    }
+    private void closefragment() {
+       // getActivity().getFragmentManager().beginTransaction().remove(Add_Item_Fragment.this).commit();
     }
 
 

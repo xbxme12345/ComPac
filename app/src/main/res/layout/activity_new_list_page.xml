@@ -69,20 +69,26 @@
             android:layout_gravity="center"
             android:textSize="20sp"/>
 
-        <ImageButton
+        <!--<ImageButton -->
+        <Button
             android:id="@+id/male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/gender_button"
             android:onClick="setGenderMale"
+            android:text="Male"
             />
+            <!-- android:src="@drawable/gender_button" -->
 
-        <ImageButton
+
+        <!--<ImageButton -->
+        <Button
             android:id="@+id/female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/gender_button"
-            android:onClick="setGenderFemale"/>
+            android:onClick="setGenderFemale"
+            android:text="Female"/>
+            <!-- android:src="@drawable/gender_button" -->
+
     </LinearLayout>
 
     <LinearLayout

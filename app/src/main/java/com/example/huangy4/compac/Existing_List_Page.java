@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -93,6 +94,23 @@ public class Existing_List_Page extends AppCompatActivity {
                 ArrayAdapter<String> arrayAdapter;
                 arrayAdapter = new ArrayAdapter<String>(Existing_List_Page.this, android.R.layout.simple_list_item_1, entries);
                 listview.setAdapter(arrayAdapter);
+
+
+                //This set of code should allow an existing list to go to item list
+                listview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                {
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                    {
+
+                        String TableName = (listview.getItemAtPosition(position)).toString();
+                        Intent intent = new Intent(Existing_List_Page.this, Item_List_Page.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("tableName", TableName);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
+                    }
+                });
             }
 
             @Override
@@ -100,5 +118,10 @@ public class Existing_List_Page extends AppCompatActivity {
 
             }
         });
+    }
+    public void gotonew()
+    {
+        Intent intent = new Intent(Existing_List_Page.this, New_List_Page.class);
+        startActivity(intent);
     }
 }
