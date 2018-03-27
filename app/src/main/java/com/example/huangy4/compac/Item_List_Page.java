@@ -146,8 +146,14 @@ public class Item_List_Page extends AppCompatActivity {
                             mnameofItem.setText(container[0]);
                             mquantity.setText(container[1]);
 
-
                             final ImageButton myBtn = mView.findViewById(R.id.confirm_add_button);
+
+
+                            mBuilder.setView(mView);
+                            final AlertDialog dialog = mBuilder.create();
+                            dialog.show();
+
+
                             myBtn.setOnClickListener(new View.OnClickListener() {
 
                                 @Override
@@ -158,15 +164,18 @@ public class Item_List_Page extends AppCompatActivity {
                                     String UID = mAuth.getCurrentUser().getUid().toString();
                                     myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List");
                                     myRef.child(nameofItem2).setValue(quantity1);
+                                    dialog.dismiss();
+
+
+
 
 
 //
                                 }
                             });
 
-                            mBuilder.setView(mView);
-                            AlertDialog dialog = mBuilder.create();
-                            dialog.show();
+
+
 
                         }
                     }
@@ -242,6 +251,11 @@ public class Item_List_Page extends AppCompatActivity {
 
 
                 final ImageButton myBtn = mView.findViewById(R.id.confirm_add_button);
+
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
                 myBtn.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -253,15 +267,14 @@ public class Item_List_Page extends AppCompatActivity {
                         //add code to make sure not blank!
                         myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(tableName).child("List");
                         myRef.child(nameofItem2).setValue(quantity1);
+                        dialog.dismiss();
 
 
 //
                     }
                 });
 
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
+
 
             }
         });
