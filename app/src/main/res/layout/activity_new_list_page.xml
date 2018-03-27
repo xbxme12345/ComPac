@@ -111,7 +111,8 @@
             android:layout_marginStart="22dp"
             android:ems="10"
             android:onClick="datePicker"
-            android:inputType="date"/>
+            android:clickable="true"
+            android:editable="false" />
 
     </LinearLayout>
 
@@ -137,7 +138,8 @@
             android:layout_marginStart="22dp"
             android:ems="10"
             android:onClick="datePicker"
-            android:inputType="date"/>
+            android:clickable="true"
+            android:editable="false" />
 
 
     </LinearLayout>
@@ -172,7 +174,8 @@
             android:layout_marginStart="22dp"
             android:ems="10"
             android:onClick="datePicker"
-            android:inputType="date"/>
+            android:clickable="true"
+            android:editable="false" />
 
     </LinearLayout>
 
@@ -198,7 +201,8 @@
             android:layout_marginStart="22dp"
             android:ems="10"
             android:onClick="timePicker"
-            android:inputType="date"/>
+            android:clickable="true"
+            android:editable="false" />
 
 
     </LinearLayout>
