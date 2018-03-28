@@ -28,4 +28,10 @@
         android:layout_height="wrap_content"
         android:text="@string/existing_list" />
 
+    <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="Sign Out"/>
+
 </LinearLayout>

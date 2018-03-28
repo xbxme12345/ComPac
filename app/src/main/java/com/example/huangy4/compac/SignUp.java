@@ -39,6 +39,7 @@ public class SignUp extends AppCompatActivity {
 
 
     private Button mSubmit_button;
+    private Button back_button;
     //
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Variable Declarations
@@ -77,6 +78,15 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View v)
             {
                 userRegister();
+            }
+        });
+
+        back_button = findViewById(R.id.Back_button);
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUp.this, Login.class);
+                startActivity(intent);
             }
         });
 
