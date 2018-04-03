@@ -54,12 +54,15 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+
+
     <LinearLayout
         android:id="@+id/gender_pair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/destination_pair"
         android:padding="10dp">
+
 
         <TextView
             android:id="@+id/gender_label"
@@ -69,25 +72,34 @@
             android:layout_gravity="center"
             android:textSize="20sp"/>
 
-        <!--<ImageButton -->
-        <Button
-            android:id="@+id/male"
+        <RadioGroup
+            android:id="@+id/gender"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="setGenderMale"
-            android:text="Male"
-            />
-            <!-- android:src="@drawable/gender_button" -->
+            android:layout_height="wrap_content" >
 
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:selectableItemBackground"
+                android:onClick="setGenderMale"
+                android:text="Male"/>
 
-        <!--<ImageButton -->
-        <Button
-            android:id="@+id/female"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="setGenderFemale"
-            android:text="Female"/>
-            <!-- android:src="@drawable/gender_button" -->
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setGenderFemale"
+                android:text="Female"/>
+
+            <RadioButton
+                android:id="@+id/noGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setGenderNone"
+                android:text="N/A"/>
+
+        </RadioGroup>
 
     </LinearLayout>
 
@@ -140,7 +152,6 @@
             android:onClick="datePicker"
             android:clickable="true"
             android:editable="false" />
-
 
     </LinearLayout>
 
@@ -203,7 +214,6 @@
             android:onClick="timePicker"
             android:clickable="true"
             android:editable="false" />
-
 
     </LinearLayout>
 
