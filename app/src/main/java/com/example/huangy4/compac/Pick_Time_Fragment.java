@@ -34,7 +34,7 @@ public class Pick_Time_Fragment extends DialogFragment {
             Log.v(TAG, "Entering onDateSet");
 
             TextView tv = getActivity().findViewById(getActivity().getCurrentFocus().getId());
-            tv.setText(Integer.toString(hour) + ":" + Integer.toString(minute));
+            tv.setText(Integer.toString(hour) + ":" + String.format("%02d", minute));
         }
     };
 

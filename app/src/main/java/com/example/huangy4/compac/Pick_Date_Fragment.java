@@ -36,7 +36,7 @@ public class Pick_Date_Fragment extends DialogFragment {
             Log.v(TAG, "Entering onDateSet");
 
             TextView tv = getActivity().findViewById(getActivity().getCurrentFocus().getId());
-            tv.setText(view.getMonth() + "-" + view.getDayOfMonth() + "-" + view.getYear());
+            tv.setText(view.getMonth()+1 + "-" + view.getDayOfMonth() + "-" + view.getYear());
         }
     };
 
