@@ -47,15 +47,16 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/add_item_button"
-        android:layout_below="@+id/exit_item_list_page"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/date_range"
         android:orientation="horizontal">
 
         <ListView
             android:id="@+id/newListView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
 
     </LinearLayout>
 
@@ -79,5 +80,19 @@
         android:layout_alignParentRight="true"
         android:background="@null"
         android:padding="10sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_del_label"
+        android:text="Edit/Delete"
+        android:layout_toStartOf="@+id/edit_button"/>
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/exit_item_list_page"
+        android:layout_toStartOf="@+id/edit_button" />
 
 </RelativeLayout>
