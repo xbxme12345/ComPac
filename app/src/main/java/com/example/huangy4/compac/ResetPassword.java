@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,15 @@ public class ResetPassword extends AppCompatActivity {
         msecques = findViewById(R.id.SecQuesView);
         answer = "  ";
         mAnswer_input = findViewById(R.id.Answer_input);
+
+        Button backBtn = findViewById(R.id.Back_Button);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ResetPassword.this, Login.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void RetrieveSecurityQuestion(View view)

@@ -1,5 +1,8 @@
 package com.example.huangy4.compac;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -18,6 +21,8 @@ import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
+
+import java.util.Calendar;
 
 
 public class New_List_Page extends AppCompatActivity {
@@ -119,9 +124,11 @@ public class New_List_Page extends AppCompatActivity {
 
                 //reminder
                 Switch reminder_textV = findViewById(R.id.reminder_switch);
-                Boolean reminder = false;
+                Boolean reminder = reminder_textV.isChecked();
 
-                String TableName = (destination+""+start_date+" " +end_date);
+                TextView reminder_date_textV = findViewById(R.id.reminder_date_text);
+                String reminder_date = reminder_date_textV.getText().toString();
+
 
                 String UID = mAuth.getCurrentUser().getUid().toString();
                 myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
@@ -136,13 +143,72 @@ public class New_List_Page extends AppCompatActivity {
                 }
                 catch (java.text.ParseException e) {
                     e.printStackTrace();
+
+                TextView reminder_time_textV = findViewById(R.id.reminder_time_text);
+                String reminder_time = reminder_time_textV.getText().toString();
+
+                if (destination.length() == 0 ||
+                    start_date.length() == 0  ||
+                    end_date.length() == 0   ) {
+
+                    Log.v(TAG, "Invalid input");
+                    AlertDialogUtil.showDialog(New_List_Page.this, "Invalid!", "Invalid! Make sure all fields are entered.");
+
+                }
+                else {
+                    if (reminder) {
+                        if (reminder_date.length() == 0 || reminder_time.length() == 0) {
+                            Log.v(TAG, "Invalid input");
+                            AlertDialogUtil.showDialog(New_List_Page.this, "Invalid!", "Invalid! Make sure all fields are entered.");
+                        }
+                        else {
+                            //Reminder Alert
+//                            String[] date = reminder_date.split("-");
+//                            String[] time = reminder_time.split(":");
+//                            Calendar tmp = Calendar.getInstance();
+//
+//                            tmp.set( Integer.parseInt(date[2]),
+//                                     Integer.parseInt(date[0]),
+//                                     Integer.parseInt(date[1]),
+//                                     Integer.parseInt(time[0]),
+//                                     Integer.parseInt(time[1]) );
+//
+//                            Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
+//                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), 1, intent, 0);
+//                            AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//                            alarmManager.set(AlarmManager.RTC_WAKEUP, tmp.getTimeInMillis(), pendingIntent);
+                        }
+                    }
+                    else {
+                        Log.v(TAG, "Proceeding");
+
+                        String TableName = (destination + "" + start_date + " " + end_date);
+
+                        String UID = mAuth.getCurrentUser().getUid().toString();
+                        myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
+                        myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
+                        myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
+                        myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
+                        myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
+                        myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
+                        myRef.child("PackingList").child(TableName).child("ReminderDate").setValue(reminder_date);
+                        myRef.child("PackingList").child(TableName).child("ReminderTime").setValue(reminder_time);
+
+                        try {
+                            itemGenerator(myRef, TableName, gender, start_date, end_date);
+                        }
+                        catch (java.text.ParseException e) {
+                            e.printStackTrace();
+
+                        Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("tableName", TableName);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+
                 }
 
-                Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("tableName", TableName);
-                intent.putExtras(bundle);
-                startActivity(intent);
             }
         });
     }
@@ -213,6 +279,10 @@ public class New_List_Page extends AppCompatActivity {
 
     public void setGenderFemale(View view) {
         gender = "Female";
+    }
+
+    public void setGenderNone(View view) {
+        gender = "";
     }
 
 }
