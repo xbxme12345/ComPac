@@ -128,6 +128,9 @@ public class New_List_Page extends AppCompatActivity {
                 TextView reminder_date_textV = findViewById(R.id.reminder_date_text);
                 String reminder_date = reminder_date_textV.getText().toString();
 
+                String TableName = (destination + "" + start_date + " " + end_date);
+
+
                 String UID = mAuth.getCurrentUser().getUid().toString();
                 myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
                 myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
@@ -185,9 +188,7 @@ public class New_List_Page extends AppCompatActivity {
 
                     Log.v(TAG, "Proceeding");
 
-                    String TableName = (destination + "" + start_date + " " + end_date);
 
-                    String UID = mAuth.getCurrentUser().getUid().toString();
                     myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
                     myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
                     myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
@@ -200,7 +201,7 @@ public class New_List_Page extends AppCompatActivity {
                     try {
                         itemGenerator(myRef, TableName, gender, start_date, end_date);
                     }
-                    catch (java.text.ParseException e) {
+                    catch (java.text.ParseException I) {
                         e.printStackTrace();
 
                         Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
@@ -213,7 +214,8 @@ public class New_List_Page extends AppCompatActivity {
                 }
 
             }
-        });
+        }
+    });
     }
 
     public void itemGenerator(DatabaseReference myRef, String TableName, String gender, String start_date, String end_date) throws ParseException {
