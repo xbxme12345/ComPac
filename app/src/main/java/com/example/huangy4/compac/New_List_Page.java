@@ -128,6 +128,20 @@ public class New_List_Page extends AppCompatActivity {
                 TextView reminder_date_textV = findViewById(R.id.reminder_date_text);
                 String reminder_date = reminder_date_textV.getText().toString();
 
+                String UID = mAuth.getCurrentUser().getUid().toString();
+                myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
+                myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
+                myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
+                myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
+                myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
+                myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
+
+                try {
+                    itemGenerator(myRef, TableName, gender, start_date, end_date);
+                }
+                catch (java.text.ParseException e) {
+                    e.printStackTrace();
+
                 TextView reminder_time_textV = findViewById(R.id.reminder_time_text);
                 String reminder_time = reminder_time_textV.getText().toString();
 
