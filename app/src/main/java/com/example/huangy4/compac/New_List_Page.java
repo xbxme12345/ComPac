@@ -128,48 +128,35 @@ public class New_List_Page extends AppCompatActivity {
                 TextView reminder_date_textV = findViewById(R.id.reminder_date_text);
                 String reminder_date = reminder_date_textV.getText().toString();
 
-                String TableName = (destination + "" + start_date + " " + end_date);
-
-
-                String UID = mAuth.getCurrentUser().getUid().toString();
-                myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
-                myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
-                myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
-                myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
-                myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
-                myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
-
-                try {
-                    itemGenerator(myRef, TableName, gender, start_date, end_date);
-                }
-                catch (java.text.ParseException e) {
-                    e.printStackTrace();
-
                 TextView reminder_time_textV = findViewById(R.id.reminder_time_text);
                 String reminder_time = reminder_time_textV.getText().toString();
 
-                if (destination.length() == 0 ||
-                    start_date.length() == 0  ||
-                    end_date.length() == 0   ) {
+                String TableName = (destination + "" + start_date + " " + end_date);
 
-                    Log.v(TAG, "Invalid input");
-                    AlertDialogUtil.showDialog(New_List_Page.this, "Invalid!", "Invalid! Make sure all fields are entered.");
 
-                }
-                else if (reminder && (reminder_date.length() == 0 || reminder_time.length() == 0) ) {
-                    Log.v(TAG, "Invalid input");
-                    AlertDialogUtil.showDialog(New_List_Page.this, "Invalid!", "Invalid! Make sure all fields are entered.");
-                }
-                else {
-                    if (reminder) {
-                        //Reminder Alert
-                        Log.v(TAG, "creating alert");
-                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-                        Intent notificationIntent = new Intent(New_List_Page.this, ReminderReceiver.class);
-                        PendingIntent broadcast = PendingIntent.getBroadcast(New_List_Page.this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                        Calendar cal = Calendar.getInstance();
+                try {
+                    if (destination.length() == 0 ||
+                            start_date.length() == 0 ||
+                            end_date.length() == 0) {
+
+                        Log.v(TAG, "Invalid input");
+                        AlertDialogUtil.showDialog(New_List_Page.this, "Invalid!", "Invalid! Make sure all fields are entered.");
+
+                    } else if (reminder && (reminder_date.length() == 0 || reminder_time.length() == 0)) {
+                        Log.v(TAG, "Invalid input");
+                        AlertDialogUtil.showDialog(New_List_Page.this, "Invalid!", "Invalid! Make sure all fields are entered.");
+                    } else {
+                        if (reminder) {
+                            //Reminder Alert
+                            Log.v(TAG, "creating alert");
+                            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+                            Intent notificationIntent = new Intent(New_List_Page.this, ReminderReceiver.class);
+                            PendingIntent broadcast = PendingIntent.getBroadcast(New_List_Page.this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                            Calendar cal = Calendar.getInstance();
 
 //                        String[] date = reminder_date.split("-");
 //                        String[] time = reminder_time.split(":");
@@ -182,38 +169,43 @@ public class New_List_Page extends AppCompatActivity {
 //                        cal.set(Calendar.MINUTE, Integer.parseInt(time[1]));
 //                        cal.set(Calendar.SECOND, 0);
 
-                        cal.add(Calendar.MINUTE, 1);
-                        alarmManager.setExact(AlarmManager.RTC, cal.getTimeInMillis(), broadcast);
+//gets number of minutes with date before displaying alarm
+                            long results = daysBetween(start_date, end_date);
+                            int time_to_alarm = ((int) results)*24*60;
+
+
+
+                            cal.add(Calendar.MINUTE, time_to_alarm);
+
+
+
+                            alarmManager.setExact(AlarmManager.RTC, cal.getTimeInMillis(), broadcast);
+
+
+                            Log.v(TAG, "Proceeding");
+                            String UID = mAuth.getCurrentUser().getUid().toString();
+                            myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
+                            myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
+                            myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
+                            myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
+                            myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
+                            myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
+                            itemGenerator(myRef, TableName, gender, start_date, end_date);
+                            Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("tableName", TableName);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
                     }
+                }
+                catch (java.text.ParseException e){
+                    e.printStackTrace();
 
-                    Log.v(TAG, "Proceeding");
-
-
-                    myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
-                    myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
-                    myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
-                    myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
-                    myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
-                    myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
-                    myRef.child("PackingList").child(TableName).child("ReminderDate").setValue(reminder_date);
-                    myRef.child("PackingList").child(TableName).child("ReminderTime").setValue(reminder_time);
-
-                    try {
-                        itemGenerator(myRef, TableName, gender, start_date, end_date);
-                    }
-                    catch (java.text.ParseException I) {
-                        e.printStackTrace();
-
-                        Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("tableName", TableName);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
 
                 }
 
-            }
+
         }
     });
     }
