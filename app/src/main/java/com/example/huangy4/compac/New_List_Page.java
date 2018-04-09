@@ -41,6 +41,57 @@ public class New_List_Page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_list_page);
 
+
+        final TextView start_date_tv = findViewById(R.id.start_date_text);
+        start_date_tv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN){
+                    start_date_tv.requestFocus();
+                    datePicker(v);
+                }
+                return true;
+            }
+        });
+
+        final TextView end_date_tv = findViewById(R.id.end_date_text);
+        end_date_tv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN){
+                    end_date_tv.requestFocus();
+                    datePicker(v);
+                }
+                return true;
+            }
+        });
+
+        final TextView reminder_date_tv = findViewById(R.id.reminder_date_text);
+        reminder_date_tv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN){
+                    reminder_date_tv.requestFocus();
+                    datePicker(v);
+                }
+                return true;
+            }
+        });
+
+
+        final TextView reminder_time_tv = findViewById(R.id.reminder_time_text);
+        reminder_time_tv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN){
+                    reminder_time_tv.requestFocus();
+                    timePicker(v);
+                }
+                return true;
+            }
+        });
+
+
         //Reminder Switch
         Switch s1 = findViewById(R.id.reminder_switch);
         s1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
