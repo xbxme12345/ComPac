@@ -122,7 +122,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:ems="10"
-            android:onClick="datePicker"
             android:clickable="true"
             android:editable="false" />
 
@@ -149,7 +148,6 @@
             android:layout_below="@+id/new_list_title"
             android:layout_marginStart="22dp"
             android:ems="10"
-            android:onClick="datePicker"
             android:clickable="true"
             android:editable="false" />
 
@@ -184,7 +182,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="22dp"
             android:ems="10"
-            android:onClick="datePicker"
             android:clickable="true"
             android:editable="false" />
 
@@ -211,7 +208,6 @@
             android:layout_below="@+id/new_list_title"
             android:layout_marginStart="22dp"
             android:ems="10"
-            android:onClick="timePicker"
             android:clickable="true"
             android:editable="false" />
 
