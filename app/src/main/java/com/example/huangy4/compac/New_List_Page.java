@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 import java.util.Calendar;
 
-
 public class New_List_Page extends AppCompatActivity {
     private static final String TAG = "ComPac";
     private String gender = "None";
@@ -129,7 +128,6 @@ public class New_List_Page extends AppCompatActivity {
                 TextView reminder_date_textV = findViewById(R.id.reminder_date_text);
                 String reminder_date = reminder_date_textV.getText().toString();
 
-
                 String UID = mAuth.getCurrentUser().getUid().toString();
                 myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
                 myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
@@ -155,50 +153,55 @@ public class New_List_Page extends AppCompatActivity {
                     AlertDialogUtil.showDialog(New_List_Page.this, "Invalid!", "Invalid! Make sure all fields are entered.");
 
                 }
+                else if (reminder && (reminder_date.length() == 0 || reminder_time.length() == 0) ) {
+                    Log.v(TAG, "Invalid input");
+                    AlertDialogUtil.showDialog(New_List_Page.this, "Invalid!", "Invalid! Make sure all fields are entered.");
+                }
                 else {
                     if (reminder) {
-                        if (reminder_date.length() == 0 || reminder_time.length() == 0) {
-                            Log.v(TAG, "Invalid input");
-                            AlertDialogUtil.showDialog(New_List_Page.this, "Invalid!", "Invalid! Make sure all fields are entered.");
-                        }
-                        else {
-                            //Reminder Alert
-//                            String[] date = reminder_date.split("-");
-//                            String[] time = reminder_time.split(":");
-//                            Calendar tmp = Calendar.getInstance();
+                        //Reminder Alert
+                        Log.v(TAG, "creating alert");
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+                        Intent notificationIntent = new Intent(New_List_Page.this, ReminderReceiver.class);
+                        PendingIntent broadcast = PendingIntent.getBroadcast(New_List_Page.this, 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                        Calendar cal = Calendar.getInstance();
+
+//                        String[] date = reminder_date.split("-");
+//                        String[] time = reminder_time.split(":");
 //
-//                            tmp.set( Integer.parseInt(date[2]),
-//                                     Integer.parseInt(date[0]),
-//                                     Integer.parseInt(date[1]),
-//                                     Integer.parseInt(time[0]),
-//                                     Integer.parseInt(time[1]) );
-//
-//                            Intent intent = new Intent(getBaseContext(), AlarmReceiver.class);
-//                            PendingIntent pendingIntent = PendingIntent.getBroadcast(getBaseContext(), 1, intent, 0);
-//                            AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-//                            alarmManager.set(AlarmManager.RTC_WAKEUP, tmp.getTimeInMillis(), pendingIntent);
-                        }
+//                        cal.clear();
+//                        cal.set(Calendar.MONTH, Integer.parseInt(date[0])-1);
+//                        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(date[1]));
+//                        cal.set(Calendar.YEAR, Integer.parseInt(date[2]));
+//                        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time[0]));
+//                        cal.set(Calendar.MINUTE, Integer.parseInt(time[1]));
+//                        cal.set(Calendar.SECOND, 0);
+
+                        cal.add(Calendar.MINUTE, 1);
+                        alarmManager.setExact(AlarmManager.RTC, cal.getTimeInMillis(), broadcast);
                     }
-                    else {
-                        Log.v(TAG, "Proceeding");
 
-                        String TableName = (destination + "" + start_date + " " + end_date);
+                    Log.v(TAG, "Proceeding");
 
-                        String UID = mAuth.getCurrentUser().getUid().toString();
-                        myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
-                        myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
-                        myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
-                        myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
-                        myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
-                        myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
-                        myRef.child("PackingList").child(TableName).child("ReminderDate").setValue(reminder_date);
-                        myRef.child("PackingList").child(TableName).child("ReminderTime").setValue(reminder_time);
+                    String TableName = (destination + "" + start_date + " " + end_date);
 
-                        try {
-                            itemGenerator(myRef, TableName, gender, start_date, end_date);
-                        }
-                        catch (java.text.ParseException e) {
-                            e.printStackTrace();
+                    String UID = mAuth.getCurrentUser().getUid().toString();
+                    myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
+                    myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
+                    myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
+                    myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
+                    myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
+                    myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
+                    myRef.child("PackingList").child(TableName).child("ReminderDate").setValue(reminder_date);
+                    myRef.child("PackingList").child(TableName).child("ReminderTime").setValue(reminder_time);
+
+                    try {
+                        itemGenerator(myRef, TableName, gender, start_date, end_date);
+                    }
+                    catch (java.text.ParseException e) {
+                        e.printStackTrace();
 
                         Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
                         Bundle bundle = new Bundle();
