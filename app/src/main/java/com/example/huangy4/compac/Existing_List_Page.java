@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,10 +28,11 @@ public class Existing_List_Page extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference myRef;
+    DatabaseReference myRef2;
 
     private ListView listview;
     private ArrayList<String> entries;
-
+    private Switch mswitch;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -68,6 +70,7 @@ public class Existing_List_Page extends AppCompatActivity {
             }
         });
 
+        mswitch = findViewById(R.id.switch2);
         listview = findViewById(R.id.newListView);
         String UID = mAuth.getUid();
         myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList");
@@ -101,13 +104,22 @@ public class Existing_List_Page extends AppCompatActivity {
                 {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                     {
+                        Boolean switchState = mswitch.isChecked();
+                        if (mswitch.isChecked()) {
+                            Log.v(TAG, String.valueOf(switchState));
+                            String UID = mAuth.getCurrentUser().getUid().toString();
+                            String stuffs = listview.getItemAtPosition(position).toString();
+                            myRef2 = FirebaseDatabase.getInstance().getReference("Users").child(UID).child("PackingList").child(stuffs);
+                            myRef2.removeValue();
 
-                        String TableName = (listview.getItemAtPosition(position)).toString();
-                        Intent intent = new Intent(Existing_List_Page.this, Item_List_Page.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("tableName", TableName);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                        } else if (!switchState) {
+                            String TableName = (listview.getItemAtPosition(position)).toString();
+                            Intent intent = new Intent(Existing_List_Page.this, Item_List_Page.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("tableName", TableName);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
 
                     }
                 });
@@ -119,9 +131,11 @@ public class Existing_List_Page extends AppCompatActivity {
             }
         });
     }
+    
     public void gotonew()
     {
         Intent intent = new Intent(Existing_List_Page.this, New_List_Page.class);
         startActivity(intent);
     }
 }
+
