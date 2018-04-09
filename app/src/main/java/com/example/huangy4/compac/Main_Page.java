@@ -7,8 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Main_Page extends AppCompatActivity {
+
     private static final String TAG = "ComPac";
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class Main_Page extends AppCompatActivity {
             }
         });
 
+
+
         Button existingList = findViewById(R.id.existing_list_button);
         existingList.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -42,6 +48,16 @@ public class Main_Page extends AppCompatActivity {
                 Intent intent = new Intent(Main_Page.this, Existing_List_Page.class);
 
                 startActivity(intent);
+            }
+        });
+
+        Button signOut = findViewById(R.id.sign_out_button);
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(TAG, "Sign out button clicked");
+                mAuth.signOut();
+                startActivity(new Intent(Main_Page.this, Login.class));
             }
         });
     }

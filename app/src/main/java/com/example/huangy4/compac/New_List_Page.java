@@ -14,10 +14,13 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 
 import java.util.Calendar;
 
@@ -25,12 +28,10 @@ public class New_List_Page extends AppCompatActivity {
     private static final String TAG = "ComPac";
     private String gender = "None";
 
-    FirebaseDatabase database;
     DatabaseReference myRef;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,6 @@ public class New_List_Page extends AppCompatActivity {
         });
 
         //Get gender. gender is set to "None" by default
-        //ImageButton male_btn = findViewById(R.id.male);
         Button male_btn = findViewById(R.id.male);
         male_btn.setOnClickListener( new ImageButton.OnClickListener() {
             public void onClick(View button) {
@@ -71,7 +71,7 @@ public class New_List_Page extends AppCompatActivity {
             }
         });
 
-        //ImageButton female_btn = findViewById(R.id.female);
+        //set gender to female is female button is clicked
         Button female_btn = findViewById(R.id.female);
         female_btn.setOnClickListener( new ImageButton.OnClickListener() {
             public void onClick(View button) {
@@ -86,11 +86,7 @@ public class New_List_Page extends AppCompatActivity {
             }
         });
 
-
-
         mAuth = FirebaseAuth.getInstance();
-
-        //mAuth.addAuthStateListener(authStateListener);
 
         ImageButton back_button = findViewById(R.id.exit_new_list_page);
         back_button.setOnClickListener(new View.OnClickListener(){
@@ -99,14 +95,12 @@ public class New_List_Page extends AppCompatActivity {
                 Log.v(TAG, "main_button clicked");
 
                 Intent intent = new Intent(New_List_Page.this, Main_Page.class);
-
                 Bundle bundle = new Bundle();
 
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
-
 
 
         ImageButton add_new_list_button = findViewById(R.id.add_new_list_button);
@@ -174,6 +168,7 @@ public class New_List_Page extends AppCompatActivity {
                         cal.add(Calendar.MINUTE, 1);
                         alarmManager.setExact(AlarmManager.RTC, cal.getTimeInMillis(), broadcast);
                     }
+
                     Log.v(TAG, "Proceeding");
 
                     String TableName = (destination + "" + start_date + " " + end_date);
@@ -188,13 +183,18 @@ public class New_List_Page extends AppCompatActivity {
                     myRef.child("PackingList").child(TableName).child("ReminderDate").setValue(reminder_date);
                     myRef.child("PackingList").child(TableName).child("ReminderTime").setValue(reminder_time);
 
-                    itemGenerator(myRef, TableName, gender);
+                    try {
+                        itemGenerator(myRef, TableName, gender, start_date, end_date);
+                    }
+                    catch (java.text.ParseException e) {
+                        e.printStackTrace();
 
-                    Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("tableName", TableName);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                        Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("tableName", TableName);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
 
                 }
 
@@ -202,44 +202,54 @@ public class New_List_Page extends AppCompatActivity {
         });
     }
 
-    public void itemGenerator(DatabaseReference myRef, String TableName, String gender) {
+    public void itemGenerator(DatabaseReference myRef, String TableName, String gender, String start_date, String end_date) throws ParseException {
         Log.v(TAG, "Generating items");
-        if (gender.equals("Male")) {
-            myRef.child("PackingList").child(TableName).child("List").child("T-Shirt").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("Underwear").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Pants").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Shorts").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Jackets").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("Dress Shirts").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("shoes").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("socks").setValue(1);
 
+        long results = daysBetween(start_date, end_date);
+
+        //general item list
+        myRef.child("PackingList").child(TableName).child("List").child("Shirts").setValue(results);
+        myRef.child("PackingList").child(TableName).child("List").child("Underwear").setValue(results);
+        myRef.child("PackingList").child(TableName).child("List").child("Pants").setValue(results);
+        myRef.child("PackingList").child(TableName).child("List").child("Jackets").setValue(2);
+        myRef.child("PackingList").child(TableName).child("List").child("Socks").setValue(results);
+        myRef.child("PackingList").child(TableName).child("List").child("Toothbrush").setValue(1);
+        myRef.child("PackingList").child(TableName).child("List").child("Toothpaste").setValue(1);
+        myRef.child("PackingList").child(TableName).child("List").child("Shoes").setValue(1);
+        myRef.child("PackingList").child(TableName).child("List").child("Shower slippers").setValue(1);
+        myRef.child("PackingList").child(TableName).child("List").child("Skincare").setValue(1);
+        myRef.child("PackingList").child(TableName).child("List").child("Phone Charger").setValue(1);
+        myRef.child("PackingList").child(TableName).child("List").child("Pajamas").setValue(1);
+
+        if (gender.equals("Male")) {
+            myRef.child("PackingList").child(TableName).child("List").child("Dress shoes").setValue(1);
+            myRef.child("PackingList").child(TableName).child("List").child("Suit").setValue(1);
         }
         else if (gender.equals("Female")) {
-            //myRef.child("PackingList").child(TableName).child("List").child("T-Shirt").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("Underwear").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Pants").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Shorts").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Jackets").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Dresses").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("shoes").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("socks").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Bra").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Makeup").setValue(1);
-
-        }
-        else {
-            //myRef.child("PackingList").child(TableName).child("List").child("T-Shirt").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("Underwear").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("Pants").setValue(1);
-            //myRef.child("PackingList").child(TableName).child("List").child("Shorts").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Jackets").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("Dress Shirts").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("shoes").setValue(1);
-            myRef.child("PackingList").child(TableName).child("List").child("socks").setValue(1);
-
+            myRef.child("PackingList").child(TableName).child("List").child("Bras").setValue(results);
+            myRef.child("PackingList").child(TableName).child("List").child("Dresses").setValue(results);
+            myRef.child("PackingList").child(TableName).child("List").child("Makeup Bag").setValue(1);
         }
 
+    }
+
+    private static long daysBetween(String start, String end) {
+        long result = 0;
+
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("mm-dd-yyyy");
+            Date one = format.parse(start);
+            Date two = format.parse(end);
+
+            long diffInMillies = Math.abs(one.getTime() - two.getTime());
+            long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            result = diff;
+        }
+        catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public void datePicker(View v) {

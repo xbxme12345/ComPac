@@ -5,10 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,9 +38,10 @@ public class SignUp extends AppCompatActivity {
     private Spinner mSecurity_input;
     private EditText mAnswer_input;
 
-
+    private TextView password_req;
 
     private Button mSubmit_button;
+    private Button back_button;
     //
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Variable Declarations
@@ -52,7 +55,6 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
 
         mEmail_input = findViewById(R.id.Email_input);
@@ -60,15 +62,13 @@ public class SignUp extends AppCompatActivity {
         mVerify_input = findViewById(R.id.Verify_input);
         mSecurity_input = findViewById(R.id.Security_input);
         mAnswer_input = findViewById(R.id.Answer_input);
-
-
+        password_req = findViewById(R.id.password_reqs);
 
         addListenerOnButton();
         addListenerSecurityItemSelection();
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // Buttons:
-
 
         mSubmit_button = findViewById(R.id.Submit_button);
         mSubmit_button.setOnClickListener(new View.OnClickListener()
@@ -80,11 +80,38 @@ public class SignUp extends AppCompatActivity {
             }
         });
 
+        back_button = findViewById(R.id.Back_button);
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUp.this, Login.class);
+                startActivity(intent);
+            }
+        });
 
 
-
-        //
         //---------------------------------------------------------
+        //Show password requirements
+
+        mPassword_input.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                password_req.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+
+        mAnswer_input.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                password_req.setVisibility(View.INVISIBLE);
+                return false;
+            }
+        });
+
+
     }
 
 
