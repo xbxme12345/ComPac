@@ -26,7 +26,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         Notification.Builder builder = new Notification.Builder(context);
 
         Notification notification = builder.setContentTitle("ComPac")
-                .setContentText("Don't forget to pack!")
+                .setContentText("Don't forget to pack for your upcoming trip!")
                 .setTicker("New Message Alert!")
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent).build();
