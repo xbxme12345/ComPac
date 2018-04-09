@@ -169,17 +169,29 @@ public class New_List_Page extends AppCompatActivity {
 //                        cal.set(Calendar.MINUTE, Integer.parseInt(time[1]));
 //                        cal.set(Calendar.SECOND, 0);
 
-//gets number of minutes with date before displaying alarm
-                            long results = daysBetween(start_date, end_date);
-                            int time_to_alarm = ((int) results)*24*60;
+                            //gets number of minutes with date before displaying alar
 
+                            //long results = daysBetween(start_date, end_date);
+                            //gets the length of time in days for the trip, then converts into minutes, and then adds to calendar
+                            //int time_to_alarm = ((int) results)*24*60;
+                            //int time_to_alarm = ((int) results) * 86400000; //convert to MS to add to current epoch time
 
+                            //cal.add(Calendar.MINUTE, time_to_alarm);
+                            //this just returns the current epoch time which we do not need. we need to convert the given time into
+                            //milliseconds and then add to current epoch time
+                            //Log.v(TAG, "reminder_date = " + reminder_date);
+                            //Log.v(TAG, "reminder_time = " + reminder_time);
 
-                            cal.add(Calendar.MINUTE, time_to_alarm);
+                            //greg
+                            String full_reminder = reminder_date + " " + reminder_time;
+                            Log.v(TAG, "Full reminder: " + full_reminder);
 
+                            //then calc epoch time of reminder, then add that time to alarm manager,
+                            long reminder_date_epoch = getReminderEpoch(full_reminder);
 
+                            //Log.v(TAG, "reminder thing: " + reminder_date_epoch);
 
-                            alarmManager.setExact(AlarmManager.RTC, cal.getTimeInMillis(), broadcast);
+                            alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminder_date_epoch, broadcast);
 
 
                             Log.v(TAG, "Proceeding");
@@ -258,6 +270,18 @@ public class New_List_Page extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    private static long getReminderEpoch(String date) {
+        Long millis = System.currentTimeMillis(); //used to init millis
+        try {
+            millis = new SimpleDateFormat("MM-dd-yyyy hh:mm").parse(date).getTime();
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return millis;
     }
 
     public void datePicker(View v) {
