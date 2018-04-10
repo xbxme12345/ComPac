@@ -214,24 +214,24 @@ public class New_List_Page extends AppCompatActivity {
 
                             //create an alarm to go off at full_reminder time
                             alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminder_date_epoch, broadcast);
-
-                            Log.v(TAG, "Proceeding");
-                            String UID = mAuth.getCurrentUser().getUid().toString();
-                            myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
-                            myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
-                            myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
-                            myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
-                            myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
-                            myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
-
-                            itemGenerator(myRef, TableName, gender, start_date, end_date);
-
-                            Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("tableName", TableName);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
                         }
+
+                        Log.v(TAG, "Proceeding");
+                        String UID = mAuth.getCurrentUser().getUid().toString();
+                        myRef = FirebaseDatabase.getInstance().getReference("Users").child(UID);
+                        myRef.child("PackingList").child(TableName).child("Destination").setValue(destination);
+                        myRef.child("PackingList").child(TableName).child("Gender").setValue(gender);
+                        myRef.child("PackingList").child(TableName).child("StartDate").setValue(start_date);
+                        myRef.child("PackingList").child(TableName).child("EndDate").setValue(end_date);
+                        myRef.child("PackingList").child(TableName).child("Reminder").setValue(reminder.toString());
+
+                        itemGenerator(myRef, TableName, gender, start_date, end_date);
+
+                        Intent intent = new Intent(New_List_Page.this, Item_List_Page.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("tableName", TableName);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
                 }
                 catch (java.text.ParseException e){
