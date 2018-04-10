@@ -40,7 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/exit_new_list_page"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_marginLeft="10dp">
         <TextView
             android:id="@+id/destination_label"
             android:layout_width="wrap_content"
@@ -50,7 +51,7 @@
 
         <EditText
             android:id="@+id/destination_input"
-            android:layout_width="wrap_content"
+            android:layout_width="225dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
@@ -61,7 +62,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/destination_pair"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_marginLeft="10dp">
 
 
         <TextView
@@ -108,7 +110,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/gender_pair"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_marginLeft="10dp">
         <TextView
             android:id="@+id/start_date_label"
             android:layout_width="wrap_content"
@@ -132,7 +135,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/start_date_pair"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_marginLeft="10dp">
         <TextView
             android:id="@+id/end_date_label"
             android:layout_width="wrap_content"
@@ -161,14 +165,16 @@
         android:text="@string/reminder"
         android:checked="true"
         android:padding="10dp"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"/>
 
     <LinearLayout
         android:id="@+id/reminder_date_pair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/reminder_switch"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_marginLeft="10dp">
         <TextView
             android:id="@+id/reminder_date_label"
             android:layout_width="wrap_content"
@@ -192,7 +198,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/reminder_date_pair"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_marginLeft="10dp">
         <TextView
             android:id="@+id/reminder_time_label"
             android:layout_width="wrap_content"
